@@ -1,0 +1,20 @@
+name: CI
+on:
+  push:
+    branches:
+    - '*'
+    - '!master'
+jobs:
+  tests:
+    env:
+      CI: true
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Run Jest tests
+      working-directory: ./client
+      run: |
+          yarn install
+          yarn run test
+          yarn run test --coverage
