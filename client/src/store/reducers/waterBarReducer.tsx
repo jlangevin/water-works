@@ -1,17 +1,17 @@
 export interface IPayload {
   floorId: number;
-  type: string;
-  status: boolean;
+  resourceType: string;
 }
 
-export type IAction = {
+export interface IAction {
   type: string,
   payload: IPayload
 };
 
-export type IFloorResources = {
-  waterBarDispenser: boolean;
-  waterBarSink: boolean;
+export interface IFloorResources {
+  waterBarDispenser: boolean | null;
+  waterBarSink: boolean | null;
+  [key: string]: boolean | null; // This allows the object to be indexable by key, this is not a new property
 };
 
 export interface IState {
@@ -21,15 +21,15 @@ export interface IState {
 export const initialState: IState = {
   1: {
     waterBarDispenser: true,
-    waterBarSink: true
+    waterBarSink: null
   },
   3: {
-    waterBarDispenser: true,
+    waterBarDispenser: false,
     waterBarSink: true
   },
   5: {
     waterBarDispenser: true,
-    waterBarSink: true
+    waterBarSink: false
   },
   7: {
     waterBarDispenser: true,
@@ -42,17 +42,20 @@ export const initialState: IState = {
 };
 
 export const types = {
-  SET_STATUS: "SET_STATUS"
+  TOGGLE_STATUS: "TOGGLE_STATUS"
 };
 
-export const reducer = (state: IState = initialState, action: IAction) => {
+export const waterBarReducer = (state: IState = initialState, action: IAction) => {
   switch (action.type) {
-    case types.SET_STATUS:
+    case types.TOGGLE_STATUS:
+
+      // Get the current status of the floor resource
+      const currStatus = state[action.payload.floorId][action.payload.resourceType];
 
       // Grab copy of current floor resources
       const newFloorState = {
         ...state[action.payload.floorId],
-        [action.payload.type]: action.payload.status
+        [action.payload.resourceType]: !currStatus
       };
 
       const newState = {

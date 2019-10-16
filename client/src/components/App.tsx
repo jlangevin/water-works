@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
+import FloorList from "./FloorList";
 import './App.css';
 
 const App: React.FC = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-      </header>
+      <div className="App-header">
+        Water Works ...or does it?
+      </div>
+      <div>
+        <FloorList />
+      </div>
     </div>
   );
 }
