@@ -9,9 +9,9 @@ export interface IAction {
 };
 
 export interface IFloorResources {
-  waterBarDispenser: boolean | null;
-  waterBarSink: boolean | null;
-  [key: string]: boolean | null; // This allows the object to be indexable by key, this is not a new property
+  waterBarDispenser?: boolean;
+  waterBarSink?: boolean;
+  [key: string]: boolean | undefined; // This allows the object to be indexable by key, this is not a new property
 };
 
 export interface IState {
@@ -20,8 +20,7 @@ export interface IState {
 
 export const initialState: IState = {
   1: {
-    waterBarDispenser: true,
-    waterBarSink: null
+    waterBarDispenser: true
   },
   3: {
     waterBarDispenser: false,
